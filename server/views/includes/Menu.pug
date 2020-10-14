@@ -1,0 +1,18 @@
+extends Header.pug
+append css
+    include ../../css/MenuBar.css
+    
+block menu
+    ul(id="menuList")
+        li
+            a(href="/") Forside
+        li
+            a(href="/housemeetings/create") Opret husmøde
+        li
+            a(href="/housemeetings/all") Husmødeoversigt
+        li
+            a(href="/statistics") Statistik
+        li
+            a(href="/settings") Indstillinger
+        li(id='logOut')
+            a(href="/user/logout") Log ud

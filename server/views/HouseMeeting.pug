@@ -1,0 +1,43 @@
+extends ./includes/Menu.pug
+
+append css
+    include ../css/HouseMeeting.css
+
+block content
+    h1 Husmøde d. #{houseMeeting.id}
+    .agenda
+        h2 Dagsorden
+        ul
+            each val, key in houseMeeting.agenda
+                li
+                    h3 #{key}
+                    form(action='/housemeetings/updatePoint' method='POST')
+                        input(type='hidden' name='houseMeeting' value=houseMeeting.id)
+                        input(type='hidden' name='title' value=key)
+                        textarea(name='description', cols='30', rows='10') #{val}
+                        input(type='submit' value='Opdater beskrivelse')
+    .mealPlan
+        h2 Madplan
+        - let weekDays = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'];
+        each val, key in houseMeeting.mealPlan
+            .weekDay
+                h3 #{weekDays[key]}
+                form(action='/housemeetings/updateDinner' method='POST')
+                    input(type='hidden' name='houseMeeting' value=houseMeeting.id)
+                    input(type='hidden' name='day' value=key)
+                    label(for='cook') Kok:
+                    input(type='text' id='cook' name='cook' value=val.cook)
+                    label(for='dish') Ret:
+                    input(type='text' id='dish' name='dish' value=val.dish)
+
+                    label Medspisende:
+                    each user in users
+                        - let userHome = (val.participants.includes(user))
+                        input(
+                            type='checkbox' 
+                            id=user name='participants' 
+                            value=user
+                            checked=(userHome)
+                        )
+                        label(for='user') #{user}
+                    input(type="submit", value="Opdater")

@@ -1,0 +1,8 @@
+label {
+    float: inline-start;
+}
+
+input[type=checkbox] {
+    margin-left: 5px;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,16 @@
+extends ./includes/Menu.pug
+
+append css
+    include ../css/Settings.css
+
+
+block content
+    h1 Indstillinger
+
+    if admin
+        .admin
+            h2 Admin
+            a(href="/user/admin/create") Opret ny bruger
+            a(href="/") Slet bruger
+    
+    h2 Opdater brugeroplysninger

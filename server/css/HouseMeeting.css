@@ -1,0 +1,28 @@
+ul p {
+    margin-right: 1em;
+}
+
+ul textarea {
+    width: 100%;
+}
+
+input[type=submit] {
+    width: 10em; height: 3em;
+    background-color: #333;
+    color: #ffffff;
+    margin-left: 5px;
+}
+
+.agenda ul input[type=submit] {
+    float: right;
+}
+
+.weekDay{
+    margin-left: 20px;
+}
+
+ul label {
+    float: inline-start;
+    width: 10em;
+    margin-right: 1em;
+}

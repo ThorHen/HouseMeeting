@@ -1,0 +1,10 @@
+extends ./includes/Menu.pug
+
+append css
+    include ../css/HouseMeetingOverview.css
+
+block content
+    .indhold
+        h1 Husmøder
+        each houseMeeting in houseMeetings
+            a(href="/housemeetings/hm/" + houseMeeting.id) #{houseMeeting.id}

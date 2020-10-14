@@ -1,0 +1,71 @@
+extends ./includes/Menu.pug
+
+append css
+    include ../css/CreateHouseMeeting.css
+
+block content
+    .createHouseMeeting
+        h1 Opret nyt husmøde
+        h2 Dagsorden
+        h3 Opret nyt punkt
+        form(action="create/setPoint", method="POST", class="point")
+            label(for="title") Titel:
+            input(type="text", id="title", name="title", placeholder="Indtast titel", required)
+            label(for="description") Beskrivelse:
+            textarea(name="description", id="description", cols="20", rows="10", placeholder="Indtast beskrivelse")
+            .empty
+            input(type="submit", value="Opret punkt")
+        h3 Punkter
+        if agenda
+            each val, key in agenda
+                form(action="create/setPoint", method="POST", class="point")
+                    label(for="updateTitle") Titel:
+                    input(type="text", id="updateTitle", name="title", value=key, required)
+                    label(for="updateDescription") Beskrivelse:
+                    textarea(name='description', id="updateDescription", cols='30', rows='10') #{val}
+                    .div
+                    input(type='submit' value='Opdater punkt')
+        h2 Madplan
+        h3 Opret ret
+        - var weekDays = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'];
+        form(action="create/setDinner", method="POST")
+            label(for="day") Dag:
+            select(name="day", id="day")
+                each val, index in weekDays
+                    option(value=index) #{val}
+            label(for="cook") Kok:
+            input(type="text", name="cook", id="cook")
+            label(for="dish") Ret:
+            input(type="text", name="dish", id="dish")
+            label Medspisende:
+            if users
+                each user in users
+                    input(type='checkbox' id=user name='participants' value=user checked)
+                    label(for='user') #{user}
+            input(type="submit", value="Opret ret")
+        h3 Retter
+        if mealPlan
+            each val, key in mealPlan
+                .weekDay
+                    form(action='create/setDinner' method='POST')
+                        select(name="day", id="dinnerDate")
+                            each val, index in weekDays
+                                option(
+                                    value=index
+                                    if u) #{val}
+                        label(for='cook') Kok:
+                        input(type='text' id='cook' name='cook' value=val.cook)
+                        label(for='dish') Ret:
+                        input(type='text' id='dish' name='dish' value=val.dish)
+
+                        label Medspisende:
+                        each user in users
+                            - let userHome = (val.participants.includes(user))
+                            input(
+                                type='checkbox' 
+                                id=user name='participants' 
+                                value=user
+                                checked=userHome
+                            )
+                            label(for='user') #{user}
+                        input(type="submit", value="Opdater")
